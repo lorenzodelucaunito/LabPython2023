@@ -34,14 +34,16 @@ print(tweet_dominio)
 # Creo una Figure con 3 Axes, uno sotto l'altro
 fig, axs = plt.subplots(nrows = 3, 
                       ncols = 1, 
-                      figsize = (8, 10))
+                      figsize = (8, 15))
 
 # Creo il grafico per le fake news
 axs[0].bar(tweet_dominio[tweet_dominio['domain_type'] == 'fake news'].domain,
            tweet_dominio[tweet_dominio['domain_type'] == 'fake news'].text,
            color = 'red')
 axs[0].set_title('Fake News')
-axs[0].tick_params(axis = 'x', labelrotation = 90)
+axs[0].tick_params(axis = 'x', labelrotation = 90, pad = 3)
+# Imposto una scala logaritmica sull'asse delle y per migliorare la leggibilità del grafico
+axs[0].set_yscale('log')
 
 # Creo il grafico per le news
 axs[1].bar(tweet_dominio[tweet_dominio['domain_type'] == 'news'].domain,
@@ -53,12 +55,19 @@ axs[1].tick_params(axis = 'x', labelrotation = 90)
 # Creo il grafico per il fact checjing
 axs[2].bar(tweet_dominio[tweet_dominio['domain_type'] == 'fact checking'].domain,
            tweet_dominio[tweet_dominio['domain_type'] == 'fact checking'].text,
-           color = 'Green')
+           color = 'Blue')
 axs[2].set_title('Fact Checking')
 axs[2].tick_params(axis = 'x', labelrotation = 90)
 
 # Aggiungo il titolo globale
 fig.suptitle('Numero di tweet per dominio', fontsize = 14)
 
+# Aggiungo del padding tra gli axes per evitare la sovrapposizione con le etichette dell'asse x
+fig.subplots_adjust(hspace=1)
+
+# Salvo la figura prodotta dal grafico
+plt.savefig("Esercizio_01.png")
+
 # Mostro il grafico
 plt.show()
+
