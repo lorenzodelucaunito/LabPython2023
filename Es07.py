@@ -48,7 +48,9 @@ print("L'ora in cui vengono pubblicate più fake news è:", max_fake_hour)
 
 
 # Crea un dataframe con i conteggi delle news e delle fake news in base all'ora del giorno
-df = my_counter.pivot(index='hour', columns='domain_type', values='my_variable_for_counter')
+df = my_counter.pivot(index='hour', columns='domain_type', values='my_variable_for_counter') 
+
+#1
 
 # Rimuovi la riga corrispondente a "fact checking" dal dataframe df
 # df = df.drop(index='fact checking')
@@ -56,6 +58,8 @@ del df['fact checking']
 
 # Crea un grafico a barre che mostri i conteggi per ogni ora del giorno
 ax = df.plot.bar()
+
+#2
 
 # Imposta il titolo del grafico
 plt.title("Tweets per ora")
