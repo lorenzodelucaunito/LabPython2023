@@ -60,6 +60,7 @@ print(lista_utenti)
 
 
 # G R A F I C O
+# PROPONGO UNA MODIFICA SE SIETE TUTTI D'ACCORDO SE NO VA BENE COSI'
 
 #Ho selezionato solo la colonna "totale" per fare il grafico  e li salvo in una variabile
 grafico = lista_utenti["totale"].head(10)
