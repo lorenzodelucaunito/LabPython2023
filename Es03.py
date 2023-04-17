@@ -5,6 +5,7 @@ Created on Thu Apr  6 13:06:43 2023
 @author: simone
 """
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 tweet= pd.read_csv("tweets.csv")
@@ -15,9 +16,7 @@ tweet_medi=tweet_medi[['domain', 'text']].groupby(['domain']).mean().reset_index
 
 tweet_medi = tweet_medi.rename({'text': 'tweet_medi_per_utente'}, axis=1)
 
-display(tweet_medi)
-
-import matplotlib.pyplot as plt
+print(tweet_medi)
 
 
 plt.bar(tweet_medi['domain'], tweet_medi['tweet_medi_per_utente'])
