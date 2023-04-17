@@ -54,7 +54,7 @@ plt.show()
 # 0 indica una mancanza di correlazione, 
 # e 1 indica una forte correlazione positiva.
 corr = top_users_df['mentions'].corr(top_users_df['text'])
-print('Il coefficiente di correlazione tra mentions e text è:', corr)
+print('Il coefficiente di correlazione tra mentions e text è:', round(corr, 2))
 print("Ovvero gli utenti che scrivono piu tweets tendono anche a fare piu mentions")
 
 
