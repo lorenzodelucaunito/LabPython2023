@@ -50,6 +50,7 @@ for i, (domain_type, hashtags) in enumerate(hashtags_by_type.items()):
     axs[i].tick_params(axis='x', labelrotation=90)
 
 #plt.tight_layout()
-plt.savefig("Esercizio_09_01.png")
+plt.savefig("Esercizio_09.png")
+
 plt.show()
 

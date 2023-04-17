@@ -40,7 +40,7 @@ merged = merged[['date','url','domain_type']]
 primo_tweet = merged.groupby('url')['date'].min()
 
 #Inseriamo una nuova colonna e applichiamo una funzione lambda per fare la differenza tra le due date
-merged['differenza_ore'] = merged.apply(lambda x: hours_difference(x['date'], primo_tweet[x['url']]), axis=1)
+merged['differenza_ore'] = merged.apply(lambda x: hours_difference(x['date'], primo_tweet[x['date']]), axis=1)
 
 #Numero di tweet con differenza_ore minore o uguale 48
 numero_tweets_48_ore = len(merged[merged['differenza_ore']<=48])
@@ -53,6 +53,7 @@ percentuale_tweets_48_ore = (numero_tweets_48_ore / tweets_totali) * 100
 
 #Media ore per ogni tipo di dominio
 media_ore_news = merged[merged['domain_type'] == 'news']['differenza_ore'].mean()
+#tweets_totali_news = len(merged.domain_type('news'))
 media_ore_fake_news = merged[merged['domain_type'] == 'fake news']['differenza_ore'].mean()
 media_ore_fact_checking = merged[merged['domain_type'] == 'fact checking']['differenza_ore'].mean()
 
