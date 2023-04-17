@@ -37,18 +37,12 @@ print(tweet_dominio)
 #     Creazione del grafico
 # =============================================================================
 
-# Imposto i valori del padding per i sottografici
-padding_top = 1.2       # Padding superiore
-padding_middle = 2     # Padding tra il primo e secondo grafico
-padding_bottom = 3   # Padding inferiore
 
 # Creo una Figure con 3 Axes, uno sotto l'altro
 fig, axs = plt.subplots(nrows = 3, 
                         ncols = 1, 
                         figsize = (10, 15))
 
-# Imposto il primo padding
-#fig.subplots_adjust(hspace=padding_top)
 
 # Creo il grafico per le fake news
 axs[0].bar(tweet_dominio[tweet_dominio['domain_type'] == 'fake news'].domain,
@@ -60,9 +54,6 @@ axs[0].tick_params(axis = 'x', labelrotation = 90)
 axs[0].set_yscale('log')
 
 
-# Imposto il secondo padding
-#fig.subplots_adjust(hspace=padding_middle)
-
 # Creo il grafico per le news
 axs[1].bar(tweet_dominio[tweet_dominio['domain_type'] == 'news'].domain,
            tweet_dominio[tweet_dominio['domain_type'] == 'news'].numero_di_tweet,
@@ -70,21 +61,18 @@ axs[1].bar(tweet_dominio[tweet_dominio['domain_type'] == 'news'].domain,
 axs[1].set_title('News')
 axs[1].tick_params(axis = 'x', labelrotation = 90)
 
-# Imposto il terzo padding
-#fig.subplots_adjust(hspace=padding_bottom)
-
 # Creo il grafico per il fact checjing
 axs[2].bar(tweet_dominio[tweet_dominio['domain_type'] == 'fact checking'].domain,
            tweet_dominio[tweet_dominio['domain_type'] == 'fact checking'].numero_di_tweet,
            color = 'Blue')
 axs[2].set_title('Fact Checking')
-#axs[2].tick_params(axis = 'x', labelrotation = -75)
+
 
 # Aggiungo il titolo globale
 fig.suptitle('Tweet per dominio', fontsize = 14)
 
 # Aggiungo del padding tra gli axes per evitare la sovrapposizione con le etichette dell'asse x
-fig.subplots_adjust(hspace=(0.8, 3, 1))
+fig.subplots_adjust(hspace=1.3)
 
 plt.ylabel('Numero di tweet')
 
