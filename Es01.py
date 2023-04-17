@@ -43,7 +43,6 @@ fig, axs = plt.subplots(nrows = 3,
                         ncols = 1, 
                         figsize = (10, 15))
 
-
 # Creo il grafico per le fake news
 axs[0].bar(tweet_dominio[tweet_dominio['domain_type'] == 'fake news'].domain,
            tweet_dominio[tweet_dominio['domain_type'] == 'fake news'].numero_di_tweet,
@@ -71,10 +70,15 @@ axs[2].set_title('Fact Checking')
 # Aggiungo il titolo globale
 fig.suptitle('Tweet per dominio', fontsize = 14)
 
-# Aggiungo del padding tra gli axes per evitare la sovrapposizione con le etichette dell'asse x
-fig.subplots_adjust(hspace=1.3)
+# Aggiungo del padding tra gli axes per evitare la sovrapposizione con 
+# le etichette dell'asse x
+#fig.subplots_adjust(hspace=1.3)
+plt.tight_layout()
 
-plt.ylabel('Numero di tweet')
+# Assegno etichetta 
+plt.ylabel('Numero di tweet', loc = 'top')
+
+
 
 # Salvo la figura prodotta dal grafico
 plt.savefig("Esercizio_01.png")
