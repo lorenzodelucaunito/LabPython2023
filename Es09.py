@@ -30,14 +30,6 @@ tweets = tweets.merge(domains[['domain', 'domain_type']], on='domain', how='left
 # Estrae gli hashtag dal testo di ogni tweet
 tweets['hashtags'] = tweets['text'].apply(lambda x: extract_hashtags(x))
 
-# =============================================================================
-# Provo a stampare il dataset dopo aver richiamato la funzione che estrae gli hashtag
-# print(tweets.columns)
-# print(tweets.head(20))
-# print("")
-# print("")
-# print("")
-# =============================================================================
 
 # Raggruppo i tweet per tipo di sito e conta gli hashtag
 hashtags_by_type = {}
