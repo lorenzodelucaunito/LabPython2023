@@ -36,52 +36,33 @@ print("\nLa proporzione di tweet per tipo di dominio è:")
 print("\n")
 print(tweetProp) 
 
+
 # G R A F I C O
 
-fig, (ax1, ax2) = plt.subplots(nrows = 1, ncols = 2, figsize = (10, 5))
+# Set colors
+colors = ['blue', 'red', 'green']
 
-# =============================================================================
-# # Grafico 1
-# ax1.pie(articoliProp, labels = articoliProp.index, autopct='%1.1f%%', colors=["blue", "red", "green"])
-# ax1.set_title("Proporzione di articoli unici per tipo di dominio", fontweight="bold")
-# ax1.axis('equal')  # rende il grafico a torta circolare
-# 
-# # Grafico 2
-# ax2.pie(tweetProp, labels = tweetProp.index, autopct = '%1.1f%%', colors = ["blue", "red", "green"])
-# ax2.set_title("Proporzione di tweet per tipo di dominio", fontweight = "bold")
-# ax2.axis('equal')  # rende il grafico a torta circolare
-# 
-# # ridimensiona automaticamente i subplot in modo che non si sovrappongano
-# plt.tight_layout()  
-# 
-# # Salvo la figura prodotta dal grafico
-# plt.savefig("Esercizio_04.png")
-# 
-# # Stampo il grafico
-# plt.show()
-# =============================================================================
-
-
-# Creazione dei grafici a torta
-fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(10,5))
+fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(10, 5))
 
 # Grafico 1
-articoliProp.plot(kind="pie", ax=ax1, colors=["blue","red","green"])
+articoliProp.plot(kind="pie", ax=ax1, colors=colors, autopct='%1.1f%%')
 ax1.set_title("Proporzione di articoli unici per tipo di dominio", fontweight="bold")
 
+ax1.set_xlabel("") # Rimuove la label sull'asse x
+
 # Grafico 2
-pie2 = tweetProp.plot(kind="pie",ax=ax2, colors=["blue","red","green"])
-pie2.legend(bbox_to_anchor=(1.1,1),title="Tipo di dominio",labelspacing=0.5)
-
+tweetProp.plot(kind="pie", ax=ax2, colors=colors, autopct='%1.1f%%') 
 ax2.set_title("Proporzione di tweet per tipo di dominio", fontweight="bold")
+ax2.set_xlabel("") # Rimuove la label sull'asse x
 
-# Spengo le etichette degli assi x e y
-ax1.axis('off')
+# Crea la legenda
+#ax1.legend(labels=articoliProp.index, loc="upper right")
+#pie2 = tweetProp.plot(kind="pie",ax=ax2, colors=["blue","red","green"])
+ax2.legend(bbox_to_anchor=(1.1,1),title="Tipo di dominio",labelspacing=0.5)
+#ax2.legend(labels=tweetProp.index, loc="upper right")
+ax1.axis("off")
 ax2.axis("off")
 
-# ridimensiona automaticamente i subplot in modo che non si sovrappongano
-plt.tight_layout()  
- 
 # Salvo la figura prodotta dal grafico
 plt.savefig("Esercizio_04.png")
  
