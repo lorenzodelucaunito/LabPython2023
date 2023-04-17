@@ -48,11 +48,11 @@ print(calcolo_df)
 # G R A F I C O 
 
 #grafico a barre che mostra la media di menzioni e retweet per tipo
-media=unione_df.groupby("domain_type").mean()[["mentions_number","is_retweet"]]
+media=unione_df.groupby("domain_type").mean()[["mentions_number","is_retweet"]]#1
 
 fig,ax=plt.subplots()
 media.plot(kind="bar",ax=ax)
-plt.title("Media di menzioni e retweet per ogni tipologia di notizia",fontweight="bold",color="red")
+plt.title("Media di menzioni e retweet per ogni tipologia di notizia",fontweight="bold",color="red")#2
 ax.set_xlabel("Tipo di sito",fontweight="bold")
 ax.set_ylabel("Media",fontweight="bold")
 plt.show()
