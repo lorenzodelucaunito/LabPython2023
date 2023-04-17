@@ -36,7 +36,7 @@ merged_df['mentions'] = merged_df['text'].apply(get_mention_number)
 groupped_df = merged_df.groupby('user_id').agg({'mentions': 'sum', 'text': 'count'})
 
 # Selezione dei primi 100 utenti per numero di mentions
-sorted_df = groupped_df.sort_values(by='mentions', ascending = False)
+sorted_df = groupped_df.sort_values(by ='mentions', ascending = False)
 top_users_df = sorted_df.head(100)
 
 
