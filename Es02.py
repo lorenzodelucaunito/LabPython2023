@@ -25,8 +25,12 @@ tweet_dominio= unione[['domain', 'text']].groupby(['domain']).count().reset_inde
 
 merged= utenti_unici.merge(tweet_dominio, left_on = 'domain', right_on='domain')
 
+# Cambio nome delle colonne con nomi piu evocativi
 merged = merged.rename({'user_id': 'utenti_unici'}, axis = 1)
 merged = merged.rename({'text': 'tweetXdominio'}, axis = 1)
+
+# Riordino i dati in base al numero di utenti unici
+merged = merged.sort_values('utenti_unici')
 
 # Stampo i dati a video
 print(merged)   
@@ -38,15 +42,14 @@ print(merged)
 
 
 # Crea una figura con due assi
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize = (13, 18))
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize = (20, 25))
 
 # Crea un grafico a barre per gli utenti unici
 ax1.bar(merged['domain'], 
         merged['utenti_unici'],
         color = 'purple')
-ax1.set_title('Utenti unici per dominio')
-# ax1.set_xlabel('Dominio')
-ax1.set_ylabel('Numero di utenti unici')
+ax1.set_title('Utenti unici per dominio', weight = 'bold')
+ax1.set_ylabel('Numero di utenti unici', weight = 'bold')
 ax1.tick_params(axis = 'x', labelrotation = 90)
 # Rendo la scala logaritmica per aumentarne la leggibilità
 ax1.set_yscale('log')
@@ -55,15 +58,21 @@ ax1.set_yscale('log')
 ax2.bar(merged['domain'], 
         merged['tweetXdominio'],
         color = 'orange')
-ax2.set_title('Tweet per dominio')
-ax2.set_xlabel('Dominio')
-ax2.set_ylabel('Numero di tweet')
+ax2.set_title('Tweet per dominio', weight = 'bold')
+ax2.set_xlabel('Dominio', weight = 'bold')
+ax2.set_ylabel('Numero di tweet', weight = 'bold')
 ax2.tick_params(axis = 'x', labelrotation = 90)
 # Rendo la scala logaritmica per aumentarne la leggibilità
 ax2.set_yscale('log')
 
 # Aggiungo del padding tra gli axes per evitare la sovrapposizione con le etichette dell'asse x
 fig.subplots_adjust(hspace = 0.5)
+
+# Evito l'overlap dei subplots
+# plt.tight_layout()
+
+# Aggiungo il titolo globale
+fig.suptitle('Utenti unici per dominio', fontsize = 20, weight = 'bold')
 
 # Salvo la figura prodotta dal grafico
 plt.savefig("Esercizio_02.png")
