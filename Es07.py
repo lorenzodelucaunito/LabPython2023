@@ -31,10 +31,12 @@ merged_table['my_variable_for_counter'] = 1
 
 # Raggruppa i dati in base all'ora del giorno e al tipo di sito (news o fake news)
 my_counter = merged_table[['domain_type', 'hour', 'my_variable_for_counter']].groupby(['domain_type', 'hour']).count().reset_index()
+my_counter = my_counter.rename(columns = {'domain_type': 'Tipo di dominio'})
+
 
 # Estrae i conteggi relativi alle news e alle fake news
-news_counts = my_counter[my_counter['domain_type'] == 'news']
-fake_news_counts = my_counter[my_counter['domain_type'] == 'fake news']
+news_counts = my_counter[my_counter['Tipo di dominio'] == 'news']
+fake_news_counts = my_counter[my_counter['Tipo di dominio'] == 'fake news']
 
 # Trova l'ora con il conteggio più alto per le news e per le fake news
 max_news_hour = news_counts.loc[news_counts['my_variable_for_counter'].idxmax()]['hour']
@@ -48,8 +50,8 @@ print("L'ora in cui vengono pubblicate più fake news è:", max_fake_hour)
 
 
 # Crea un dataframe con i conteggi delle news e delle fake news in base all'ora del giorno
-df = my_counter.pivot(index='hour', columns='domain_type', values='my_variable_for_counter') 
-
+df = my_counter.pivot(index='hour', columns='Tipo di dominio', values='my_variable_for_counter') 
+df = df.rename(columns = {'domain_type': 'Tipo di dominio'})
 #1
 
 # Rimuovi la riga corrispondente a "fact checking" dal dataframe df
@@ -57,6 +59,11 @@ df = my_counter.pivot(index='hour', columns='domain_type', values='my_variable_f
 del df['fact checking']
 
 # Crea un grafico a barre che mostri i conteggi per ogni ora del giorno
+
+barlist = plt.bar([0, 1])
+barlist[0].set_color('red')
+
+
 ax = df.plot.bar()
 
 #2
