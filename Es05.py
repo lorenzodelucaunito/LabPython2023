@@ -16,38 +16,50 @@ unione_df = pd.merge(tweet,domini,on="domain")
 news = unione_df[unione_df["domain_type"] == "news"]     
 news = news[['user_id', 'text']].groupby(['user_id']).count().reset_index()
 news = news.sort_values('text', ascending = False)
+news = news.rename(columns={'text': 'numero_di_tweet'})
 top_news = news.head(10) 
+print('I primi 10 utenti che twittano news sono: ')
 print(top_news)
+print('')
+print('')
 
 # Fake News:
 fake_news = unione_df[unione_df["domain_type"]=="fake news"]
 fake_news = fake_news[['user_id', 'text']].groupby(['user_id']).count().reset_index()
 fake_news = fake_news.sort_values('text', ascending = False)
+fake_news = fake_news.rename(columns={'text': 'numero_di_tweet'})
 top_fake_news = fake_news.head(10) 
+print('I primi 10 utenti che twittano fake-news sono: ')
 print(top_fake_news)
+print('')
+print('')
 
 #Fact Checking:
 fact_checking = unione_df[unione_df["domain_type"] == "fact checking"]
 fact_checking = fact_checking[['user_id', 'text']].groupby(['user_id']).count().reset_index()
 fact_checking = fact_checking.sort_values('text', ascending = False)
+fact_checking = fact_checking.rename(columns={'text': 'numero_di_tweet'})
 fact_checking = fact_checking.head(10) 
+print('I primi 10 utenti che twittano fact-checking sono: ')
 print(fact_checking)
+print('')
+print('')
 
 # Creazione di una figura con 3 subplots
 fig, axs = plt.subplots(1, 3, figsize=(15,5))
 
 # Grafico a torta delle news
-top_news.plot.pie(y = 'text', labels = top_news['text'], legend = False, ax = axs[0])
+top_news.plot.pie(y = 'numero_di_tweet', labels = top_news['numero_di_tweet'], legend = False, ax = axs[0])
 axs[0].set_title('Top 10 utenti che pubblicano news')
 axs[0].set_ylabel('')
 
 # Grafico a torta delle fake news
-top_fake_news.plot.pie(y='text', labels = top_fake_news['text'], legend = False, ax = axs[1])
+top_fake_news.plot.pie(y='numero_di_tweet', labels = top_fake_news['numero_di_tweet'], legend = False, ax = axs[1])
 axs[1].set_title('Top 10 utenti che pubblicano fake news')
 axs[1].set_ylabel('')
 
 # Grafico a torta del fact checking
-fact_checking.plot.pie(y = 'text', labels = fact_checking['text'], legend = False, ax = axs[2])
+fact_checking.plot.pie(y = 'numero_di_tweet', labels = fact_checking['numero_di_tweet'], legend = False, ax = axs[2])
 axs[2].set_title('Top 10 utenti che pubblicano fact checking')
 axs[2].set_ylabel('')
 
