@@ -56,10 +56,7 @@ ax2.set_title("Proporzione di tweet per tipo di dominio", fontweight="bold")
 ax2.set_xlabel("") # Rimuove la label sull'asse x
 
 # Crea la legenda
-#ax1.legend(labels=articoliProp.index, loc="upper right")
-#pie2 = tweetProp.plot(kind="pie",ax=ax2, colors=["blue","red","green"])
 ax2.legend(bbox_to_anchor=(1.1,1),title="Tipo di dominio",labelspacing=0.5)
-#ax2.legend(labels=tweetProp.index, loc="upper right")
 ax1.axis("off")
 ax2.axis("off")
 
