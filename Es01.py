@@ -24,7 +24,12 @@ tweet_dominio= tweet[['domain', 'text']].groupby(['domain']).count().reset_index
 unione = tweet.merge(domini, left_on = 'domain', right_on='domain')
 
 tweet_dominio= unione[['domain', 'text', 'domain_type']].groupby(['domain', 'domain_type']).count().reset_index()
+
+# Riassegno il nome della colonna che contiene il numero di tweet
 tweet_dominio = tweet_dominio.rename(columns={'text': 'numero_di_tweet'})
+
+# Ordino il dataset per numero di tweet crescente
+tweet_dominio = tweet_dominio.sort_values('numero_di_tweet') 
 
 print(tweet_dominio)
 
