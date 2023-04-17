@@ -60,13 +60,13 @@ del df['fact checking']
 
 # Crea un grafico a barre che mostri i conteggi per ogni ora del giorno
 
-barlist = plt.bar([0, 1])
-barlist[0].set_color('red')
-
-
 ax = df.plot.bar()
 
-#2
+# Crea una lista di colori per le barre
+colori = ['red', 'green']
+
+# Crea un grafico a barre che mostri i conteggi per ogni ora del giorno, impostando i colori delle barre
+ax = df.plot.bar(color=colori)
 
 # Imposta il titolo del grafico
 plt.title("Tweets per ora")
