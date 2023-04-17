@@ -20,6 +20,7 @@ import matplotlib.pyplot as plt
 def extract_hashtags(text):
     return re.findall("#[a-zA-Z0-9]+", text)
 
+
 # Importo i file csv
 tweets = pd.read_csv('tweets.csv')
 domains = pd.read_csv('domains.csv')
@@ -30,14 +31,6 @@ tweets = tweets.merge(domains[['domain', 'domain_type']], on='domain', how='left
 # Estrae gli hashtag dal testo di ogni tweet
 tweets['hashtags'] = tweets['text'].apply(lambda x: extract_hashtags(x))
 
-# =============================================================================
-# Provo a stampare il dataset dopo aver richiamato la funzione che estrae gli hashtag
-# print(tweets.columns)
-# print(tweets.head(20))
-# print("")
-# print("")
-# print("")
-# =============================================================================
 
 # Raggruppo i tweet per tipo di sito e conta gli hashtag
 hashtags_by_type = {}                                                           # Creo un dizionario (array chiave valore) che contiene i 10 hashtag più frequenti per ogni sito 
@@ -47,8 +40,6 @@ for domain_type in ['news', 'fake news', 'fact checking']:                      
     hashtag_counts = pd.Series(hashtags_of_type).value_counts().head(10)        # Conto le occorrenze di ciaascun hashtag con il metodo value_count delle series pandas. Seleziono i primi dieci con head(10)
     hashtags_by_type[domain_type] = hashtag_counts                              # Aggiungo la serie dei dieci hashtag al dizionario, in corrispondenza del domain che il ciclo for sta scorrendo.
     
-    
-# print(hashtags_by_type.items())
 
 # Stampa i risultati
 for domain_type, hashtags in hashtags_by_type.items():
@@ -59,7 +50,7 @@ for domain_type, hashtags in hashtags_by_type.items():
 # Crea un grafico a barre dei 10 hashtag più frequenti per ogni tipo di sito
 fig, axs = plt.subplots(1, 3, figsize=(15,5))
 for i, (domain_type, hashtags) in enumerate(hashtags_by_type.items()):
-    axs[i].bar(hashtags.index, hashtags.values)
+    axs[i].bar(hashtags.index, hashtags.values, )
     axs[i].set_title(domain_type)
     axs[i].set_xlabel('Hashtag')
     axs[i].set_ylabel('Frequenza')    
