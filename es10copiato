@@ -1,0 +1,72 @@
+#Fra i tweet che contengono una determinata URL, 
+#qual è la percentuale di tweet scritti entro 48 ore dalla prima volta che la URL è stata mai twittata?
+#Calcolare per ciascuna URL la prima volta che appare nel dataset.
+#Con la funzione hours_difference calcolare per ogni tweet quante ore di distanza c’è fra data e ora di pubblicazione rispetto alla prima apparizione della URL che contiene.
+#Qual è il valore medio per news, fake news e fact checking?
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+import random
+import datetime
+
+def hours_difference( date1, date2 ):
+    format = '%Y-%m-%d %H:%M:%S'
+    date1 = datetime.datetime.strptime(date1, format)
+    date2 = datetime.datetime.strptime(date2, format)
+    diff = date2 - date1
+    hours = (diff.total_seconds()) // 60
+    return hours
+def is_within48(h):
+    if(h<48):
+        return 1
+    else:
+        return 0
+
+domains = pd.read_csv("domains.csv")
+tweets = pd.read_csv("tweets.csv")
+tdmerge=pd.merge(domains, tweets, left_on='domain', right_on='domain')
+
+td=tdmerge[['domain_type', 'url', 'date']].groupby(['domain_type', 'url'])['date'].min().reset_index() #trovo prima pubblicazione
+td.rename(columns={'date': "first_publish"}, inplace=True)
+tdmerge1=pd.merge(tdmerge, td, left_on='url', right_on='url') #merge per poi trovare differenza
+tdmerge1['h_difference']=tdmerge1.apply(lambda x: hours_difference(x.first_publish, x.date), axis=1)
+tdmerge1['within 48h']=tdmerge1['h_difference'].map(lambda x: is_within48(x)) #se diff<48:1 altrimenti 0
+tdmerge1.rename(columns={'domain_type_x': "domain_type"}, inplace=True)
+tdmerge1.drop(columns=['domain_type_y'], axis=1, inplace=True)
+
+#    calcolo percentuale totale
+sum_48h=tdmerge1['within 48h'].sum()
+totrows=len(tdmerge1)
+perc_all=(sum_48h/totrows)*100
+print('perc_all: ',perc_all)
+
+#   calcolo valore medio di ore per n, fn, fc --> ore passate dalla prima pubblicazione dell'URL
+meanvalue=tdmerge1[['domain_type', 'within 48h']].groupby('domain_type')['within 48h'].mean().reset_index()
+meanvalue.rename(columns={'within 48h': "mean_h"}, inplace=True)
+print('mean value: ',meanvalue)
+
+#   plot
+fig, ax = plt.subplots(nrows = 1, ncols = 2, figsize = (12, 4))
+ax1, ax2 = ax
+colors1=['#97DEFF', '#DAF5FF']
+colors2=['#D3CEDF', '#DBA39A', '#BBD6B8']
+
+# pie chart
+ax1.set_title("Percentuale tweet scritti entro 48 ore")
+x=[perc_all, 100-perc_all]
+labels=['Tweets scritti entro 48h', 'Tweets scritti oltre 48h']
+ax1.pie(x, labels = labels, colors = colors1, startangle = 128, autopct='%1.2f%%', textprops={'fontsize':8})
+ax1.axis('off')
+x1=meanvalue['domain_type'].loc[meanvalue['domain_type']=='news']
+y1=meanvalue['mean_h'].loc[meanvalue['domain_type']=='news']
+x2=meanvalue['domain_type'].loc[meanvalue['domain_type']=='fake news']
+y2=meanvalue['mean_h'].loc[meanvalue['domain_type']=='fake news']
+x3=meanvalue['domain_type'].loc[meanvalue['domain_type']=='fact checking']
+y3=meanvalue['mean_h'].loc[meanvalue['domain_type']=='fact checking']
+ax2.set_title("Valore medio di ore passate dalla prima pubblicazione di un url")
+ax2.bar(x1, y1, color=colors2[0])
+ax2.bar(x2, y2, color=colors2[1])
+ax2.bar(x3, y3, color=colors2[2])
+ticks = ax2.get_yticks()
+plt.tight_layout()
+plt.show()
